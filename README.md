@@ -12,7 +12,7 @@ June 21: I started uploading codes related to the Scoring Rules toolbox. Cleanin
 
 June 21: Figure_4.mlx: Livescript of Figure 4 of referenced paper
 
-June 21: Table_6.mlx: Livescript of Table 5 of referenced paper
+June 21: Table_6.mlx: Livescript of Table 6 of referenced paper
 
 New material will be uploaded soon
 
