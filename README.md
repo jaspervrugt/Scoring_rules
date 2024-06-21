@@ -7,10 +7,14 @@ e2023WR036710. https://doi.org/10.1029/2023WR036710
 
 Time Line:
 June 19: Paper was published
+
 June 21: I started uploading codes related to the Scoring Rules toolbox. Cleaning up my own codes and turning some of them into Live Scripts. 
+
 June 21: Figure_4.mlx: Livescript of Figure 4 of referenced paper
 
 New material will be uploaded soon
+
 Table 6 of referenced paper
+
 Cae studies on SAC-SMA, BMA, etc.
 
