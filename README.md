@@ -1,6 +1,16 @@
 # Scoring_rules
 Scoring Rules of Hydrograph Functionals
 
-Please check back this space soon. Tomorrow (today: 6/20/2024) I will upload software related to the paper:
+Based on the paper:
 Vrugt, J. A. (2024). Distribution‐based model evaluation and diagnostics: Elicitability, propriety, and scoring rules for hydrograph functionals. Water Resources Research, 60,
 e2023WR036710. https://doi.org/10.1029/2023WR036710
+
+Time Line:
+June 19: Paper was published
+June 21: I started uploading codes related to the Scoring Rules toolbox. Cleaning up my own codes and turning some of them into Live Scripts. 
+June 21: Figure_4.mlx: Livescript of Figure 4 of referenced paper
+
+New material will be uploaded soon
+Table 6 of referenced paper
+Cae studies on SAC-SMA, BMA, etc.
+
