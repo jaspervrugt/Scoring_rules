@@ -20,6 +20,12 @@ June 21: **Table_6.mlx**: MATLAB Live Script of Table 6 of referenced paper
 
 June 21: **Appendix_E.mlx**: MATLAB Live Script of Appendix E of referenced paper
 
+June 22: **CRPS_normal.mlx**: MATLAB Live Script of Appendix I of referenced paper
+
+June 22: **CRPS_GEV.mlx**: MATLAB Live Script of Appendix I of referenced paper
+
+June 22: **CRPS_PIII.mlx**: MATLAB Live Script of Appendix I of referenced paper
+
 New material will be uploaded soon
 
 Cae studies on SAC-SMA, BMA, etc.
