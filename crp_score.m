@@ -44,8 +44,9 @@ function [mean_crps,crps_value,num_nan] = crp_score(fcst,obs,type_cdf,method)
 %% (https://www.mathworks.com/matlabcentral/fileexchange/47807-...                    %%
 %% continuous-rank-probability-score), MATLAB Central File Exchange.                  %%
 %%                                                                                    %%
-%% (c) Written by Jasper A. Vrugt, July 2021                                          %%
+%% (c) Written by Jasper A. Vrugt                                                     %%
 %% University of California Irvine                                                    %%
+%% July 2021                                                                          %%
 %%                                                                                    %%
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% %%
 
@@ -89,15 +90,14 @@ else
     end
     if max(type_cdf) > 1 || min(type_cdf) < 0
         error('crp_score:Wrong_Empirical_CDF',...
-            'Parameters p1 and p2 of empirical CDF must be between zero and one');
+            'Parameters p1 and p2 of empirical CDF must be between 0 and 1');
     end
     p1 = type_cdf(1); p2 = type_cdf(2);
 end
 
 %% Ensemble size
 [n,m] = size(fcst);         % Determine the size of the forecast matrix
-% n measurement times
-% m ensemble members
+% n measurement times, m ensemble members
 if size(obs,1) ~= n
     error('CRPS_JAV:WrongDimension',...
         'The length of the observation vector does not match number of rows of forecast matrix');
@@ -111,14 +111,13 @@ ys = sort(fcst,2);          % Sort entries in all rows of fcst in increasing ord
 
 %% Note: the CRPS is negatively-oriented in each computation method
 %%       this is reversed into a positively oriented score at bottom of code
-switch method %% Different computation methods (3rd is fastest)
+switch method               % Different computation methods (3rd is fastest)
 
-    case 1
-        % Compute probabilty
-        p = ((1:m)-p1)./(m+p2);
-        r1 = p.^2;  %ith probability squared
-        r2 = (1.0-p).^2; %
-        % Loop through all number of observations
+    case 1 % MATLAB code of Durga Lal Shrestha
+        p = ((1:m)-p1)./(m+p2);         % Compute probabilties
+        r1 = p.^2;                      % Probability squared
+        r2 = (1.0-p).^2;                % 1-prob squared
+        % Loop through all observations
         for t = 1:n
             % check if there are any missing values
             missingFcst = any(isnan(fcst(t,:)));
@@ -127,7 +126,7 @@ switch method %% Different computation methods (3rd is fastest)
                 ind = find(fcst(t,:)<=obs(t),1,'last');
                 if ~isempty(ind) % i.e. obs(i) >  fcst(i,1)
                     crpsLeft = 0;
-                    if ind>1 % left of the observation
+                    if ind>1                % left of the observation
                         fcstLeft = fcst(t,1:ind);
                         dxLeft = diff(fcstLeft);
                         pLeft = r1(1:ind-1);
@@ -164,7 +163,7 @@ switch method %% Different computation methods (3rd is fastest)
             end % not missing
         end % all forecasts
 
-    case 2 %% Method above but vectorized
+    case 2 %% JAV: Method above but vectorized
         lg = 0<1;                   % zeroth value to skip first column
         %% Incorporate the plotting position
         p = ((0:m)'-p1)./(m + p2);  % Compute probabilities: column for inner product
@@ -195,21 +194,21 @@ switch method %% Different computation methods (3rd is fastest)
             crps_value(t) = alfa * r1 + beta * r2;                  % CRPS score as inner product
         end
 
-    case 3 %% Approach B1: For empirical CDF
+    case 3 %% JAV: For empirical CDF
         for t = 1:n
             crps_value(t) = 2/m^2 * sum( (ys(t,1:m) - obs(t)) ...
                 .* ( m * ( obs(t) < ys(t,1:m) ) - (1:m) + 1/2 ) );
         end
 
-    case 4 %% Approach B2: For empirical CDF! Vectorized approach of for loop above
+    case 4 %% JAV: For empirical CDF: Vectorized approach [= loop above]
         crps_value = 2/m^2 * sum ( ( ys(1:n,1:m) - obs(1:n,1) ) .* ...
             ( m * ( obs(1:n,1) < ys(1:n,1:m) ) - (1:m) + 1/2 ) , 2);
 
-    case 5 %% Quantile formulation
+    case 5 %% JAV: Quantile formulation
         % Can implement later
         
 end
 
-crps_value = -crps_value;               % From negative to positive orientation (larger is better)   
-mean_crps = mean(crps_value,'omitnan'); % Compute mean of CRPS
-num_nan = sum(isnan(crps_value));       % Return the number of nan values
+crps_value = -crps_value;               % Negative to positive orientation (larger is better)   
+mean_crps = mean(crps_value,'omitnan'); % Compute mean CRPS
+num_nan = sum(isnan(crps_value));       % Number of nan values
