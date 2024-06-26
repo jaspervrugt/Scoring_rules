@@ -26,6 +26,8 @@ June 22: **CRPS_GEV.mlx**: MATLAB Live Script of Appendix I of referenced paper
 
 June 22: **CRPS_PIII.mlx**: MATLAB Live Script of Appendix I of referenced paper
 
+June 26: **decomposition.mlx**: MATLAB Live Script of Scoring Rule Decomposition of referenced paper
+
 New material will be uploaded soon
 
 Cae studies on SAC-SMA, BMA, etc.
